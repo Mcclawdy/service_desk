@@ -1,0 +1,29 @@
+<Operation>
+    <Details>
+        <Worklogs>
+            <Worklog>
+                <parameter>
+                    <name>description</name>
+                    <value>COMMENT</value>
+                </parameter>
+                <parameter>
+                    <name>technician</name>
+                    <value>EMPLOYEE</value>
+                </parameter>
+                <parameter>
+                    <name>cost</name>
+                    <value>0</value>
+                </parameter>
+                <parameter>
+                    <name>workMinutes</name>
+                    <value>MINUTES</value>
+                </parameter>
+                <parameter>
+                    <name>workHours</name>
+                    <value>HOURS</value>
+                </parameter>
+            </Worklog>
+        </Worklogs>
+    </Details>
+</Operation>
+
