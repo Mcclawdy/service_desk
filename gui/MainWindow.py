@@ -1,9 +1,8 @@
-from PyQt5.QtCore import QDir, QFileInfo, QTimer
-from PyQt5 import QtGui
+import os
 import requests
-from lxml import etree
 import xml.etree.ElementTree as ET
 
+from PyQt5 import QtGui
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QLineEdit,
     QFileDialog, QInputDialog, QMessageBox
@@ -12,17 +11,27 @@ from .ui.MainWindowUi import Ui_MainWindow
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, *args, **kwargs):
-
+        self.clickedCount = 0
+        self._apiKey = ''
         super().__init__(*args, **kwargs)
         self.setupUi(self)
         self._showHideApi()
         self._initSignals()
+        self.setWindowIcon(QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + os.path.sep + 'ico.png'))
+
 
 
     def _initSignals(self):
         self.sendBtn.clicked.connect(self.sendWorklog)
         self.logoutBtn.clicked.connect(self.close)
+        self.showAPIBtn.clicked.connect(self.onClick)
+        self.APIAppendBtn.clicked.connect(self.setApiKey)
 
+
+    def getApiKey(self):
+        if self._apiKey:
+            apiKey = self._apiKey
+            return apiKey
 
     def getEmployeeFullame(self):
         """Задает полное имя сотрудника"""
@@ -82,6 +91,40 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         return [status[0], message[0]]
 
 
+ # Запись API ключа
+
+    def setApiKey(self):
+        if self.apiEdit.text():
+            self._apiKey = self.apiEdit.text().strip()
+            self.APIAppendBtn.setVisible(False)
+            self.apiEdit.setVisible(False)
+        else:
+            self.statusEdit.insert('')
+            self.statusEdit.insert('API ключ не введен, или введен неверно')
+
+
+    def onClick(self):
+        self.clickedCount += 1
+        if self.clickedCount == 5:
+            self.apiEdit.setVisible(1)
+            self.APIAppendBtn.setVisible(1)
+            self.clickedCount = 0
+
+
+    def _showHideApi(self):
+        """Скрывает и показывает виджет apiEdit"""
+        self.showAPIBtn.setFlat(True)
+        notResizeEdit = self.apiEdit.sizePolicy()
+        notResizeEdit.setRetainSizeWhenHidden(True)
+        notResizeBtn = self.APIAppendBtn.sizePolicy()
+        notResizeBtn.setRetainSizeWhenHidden(True)
+        self.apiEdit.setSizePolicy(notResizeEdit)
+        self.APIAppendBtn.setSizePolicy(notResizeEdit)
+        self.apiEdit.setVisible(0)
+        self.APIAppendBtn.setVisible(0)
+
+
+
 
 
  # Отправка запросов
@@ -90,7 +133,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """Отправляет рабочий журнал и возвращает ответ от сервера"""
         r = requests.post(f'https://sd.korusconsulting.ru/sdpapi/request/{self.getRequestNumber()}/worklogs',
                           params={'OPERATION_NAME': 'ADD_WORKLOG',
-                                  'TECHNICIAN_KEY': '25F65F32-4E36-4F2A-B832-A08B8EBDAB6D',
+                                  'TECHNICIAN_KEY': f'{self.getApiKey()}',
                                   'INPUT_DATA': self.parseWorklogXml('gui/worklog.xml')
                                   },
                         )
@@ -98,13 +141,5 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         message = self.checkData(r.text)[1]
         print(r.text)
         self.statusEdit.insert('')
-        self.statusEdit.insert(f'Status - {str(status)} \n Message - {message}')
-
-
-
-    def _showHideApi(self):
-        """Скрывает и показывает виджет apiEdit"""
-        not_resize = self.apiEdit.sizePolicy()
-        not_resize.setRetainSizeWhenHidden(True)
-        self.apiEdit.setSizePolicy(not_resize)
-        self.apiEdit.setVisible(False)
+        self.statusEdit.insert(f'Status - {str(status)}')
+        self.statusEdit.insert(f'Message - {message}')
