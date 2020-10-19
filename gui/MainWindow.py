@@ -99,7 +99,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.APIAppendBtn.setVisible(False)
             self.apiEdit.setVisible(False)
         else:
-            self.statusEdit.insert('')
+            self.statusEdit.clear()
             self.statusEdit.insert('API ключ не введен, или введен неверно')
 
 
@@ -140,6 +140,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         status = self.checkData(r.text)[0]
         message = self.checkData(r.text)[1]
         print(r.text)
-        self.statusEdit.insert('')
+        self.statusEdit.clear()
         self.statusEdit.insert(f'Status - {str(status)}')
         self.statusEdit.insert(f'Message - {message}')
