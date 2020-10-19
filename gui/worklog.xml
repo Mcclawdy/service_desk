@@ -4,26 +4,25 @@
             <Worklog>
                 <parameter>
                     <name>description</name>
-                    <value>COMMENT</value>
+                    <value>description</value>
                 </parameter>
                 <parameter>
                     <name>technician</name>
-                    <value>EMPLOYEE</value>
+                    <value>technician</value>
                 </parameter>
                 <parameter>
                     <name>cost</name>
-                    <value>0</value>
+                    <value>cost</value>
                 </parameter>
                 <parameter>
                     <name>workMinutes</name>
-                    <value>MINUTES</value>
+                    <value>workMinutes</value>
                 </parameter>
                 <parameter>
                     <name>workHours</name>
-                    <value>HOURS</value>
+                    <value>workHours</value>
                 </parameter>
             </Worklog>
         </Worklogs>
     </Details>
 </Operation>
-

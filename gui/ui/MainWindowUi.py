@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(777, 557)
+        MainWindow.resize(600, 400)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -77,7 +77,7 @@ class Ui_MainWindow(object):
         self.statusEdit.setMinimumSize(QtCore.QSize(0, 100))
         self.statusEdit.setReadOnly(True)
         self.statusEdit.setObjectName("statusEdit")
-        self.statusEdit.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.statusEdit.setEchoMode(QtWidgets.QLineEdit.Normal)
         self.gridLayout.addWidget(self.statusEdit, 4, 2, 1, 1)
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setObjectName("label")
@@ -85,9 +85,6 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addLayout(self.gridLayout, 1, 0, 1, 2)
         self.verticalLayout.addLayout(self.gridLayout_2)
         MainWindow.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
         self.menuBar = QtWidgets.QMenuBar(MainWindow)
         self.menuBar.setGeometry(QtCore.QRect(0, 0, 777, 21))
         self.menuBar.setObjectName("menuBar")
