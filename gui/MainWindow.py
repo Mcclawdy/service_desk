@@ -17,7 +17,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self._showHideApi()
         self._initSignals()
-        self.setWindowIcon(QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + os.path.sep + 'ico.png'))
+        # self.setWindowIcon(QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + os.path.sep + 'ico.png'))
 
 
 
@@ -100,7 +100,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.apiEdit.setVisible(False)
         else:
             self.statusEdit.clear()
-            self.statusEdit.insert('API ключ не введен, или введен неверно')
+            self.statusEdit.insert('API ключ не введен или введен неверно')
 
 
     def onClick(self):
@@ -131,7 +131,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def sendWorklog(self, data=None):
         """Отправляет рабочий журнал и возвращает ответ от сервера"""
-        r = requests.post(f'https://sd.korusconsulting.ru/sdpapi/request/{self.getRequestNumber()}/worklogs',
+        url = ''
+        r = requests.post(f'{url}{self.getRequestNumber()}/worklogs',
                           params={'OPERATION_NAME': 'ADD_WORKLOG',
                                   'TECHNICIAN_KEY': f'{self.getApiKey()}',
                                   'INPUT_DATA': self.parseWorklogXml('gui/worklog.xml')
